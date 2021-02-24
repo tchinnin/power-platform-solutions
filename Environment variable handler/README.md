@@ -7,6 +7,9 @@ This flow takes one (1) input parameter :
 And retrieve one (1) output : 
 - **Environment variable value**
 
+Here is the Flow diagram:
+![alt text](https://github.com/tchinnin/Power-Platform-Solutions/blob/main/High level Flow diagram.png?raw=true)
+
 It uses one connection to `Common Data Service` connector (not the Current Environement one).
 It works with all types of Power Platform Environement variable. In all cases, it will return a `Text` value. So you will probably have to convert the output in your Parent Flow using either:
 - `if()` for a Boolean variable
