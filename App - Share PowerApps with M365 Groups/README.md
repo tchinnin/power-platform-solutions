@@ -1,7 +1,5 @@
 # Enable Power Apps Sharing with Microsoft 365 Groups
 
-  
-
 This **Dataverse For Teams** Solution contains a Power Apps Canvas application that allows a user to set the **"SecurityEnabled"** flag of each Microsoft 365 Groups he owns.
 
 By default, sharing a Power Apps Canvas with a Microsoft 365 Group (so a Microsoft Teams also), is not possible. As stated in this [documentation](https://docs.microsoft.com/en-us/powerapps/maker/canvas-apps/share-app#share-an-app-with-microsoft-365-groups), the **"SecurityEnable"** must be enabled to allow it.
