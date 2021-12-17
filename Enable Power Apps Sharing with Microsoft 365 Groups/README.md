@@ -17,7 +17,5 @@ Once a button is clicked, a Power Automate Flow is triggered. The flow uses the 
 ### Version History
 
 Version| Date | Description
-
 --- | --- | ---
-
 1.0.211217.0| 2021/12/17 | First version of the solution
