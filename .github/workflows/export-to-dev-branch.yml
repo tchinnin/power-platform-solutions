@@ -149,4 +149,4 @@ jobs:
 
       - name: Push to Git new branch
         if: ${{ github.event.inputs.branchToCreate != '' }}
-        run: git push origin ${{ github.event.inputs.branchToCreate }}
+        run: git push origin dev-${{ github.event.inputs.branchToCreate }}
