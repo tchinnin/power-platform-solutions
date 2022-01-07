@@ -28,14 +28,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Configure Git User
-        run: |
-          # Configure email/name and checkout git branch
-          git config user.email "${{ github.event.sender.id }}+${{ github.event.sender.login }}@users.noreply.github.com"
-          git config user.name "${{ github.event.sender.login }}"
-
       - name: Configure Git existing branch
         if: ${{ github.event.inputs.branchToCreate == '' }}
         run: git checkout ${{ github.event.inputs.branch }}
@@ -43,6 +35,12 @@ jobs:
       - name: Configure Git new branch
         if: ${{ github.event.inputs.branchToCreate != '' }}
         run: git checkout -b dev-${{ github.event.inputs.branchToCreate }} ${{ github.event.inputs.branch }}
+
+      - name: Configure Git User
+        run: |
+          # Configure email/name and checkout git branch
+          git config user.email "${{ github.event.sender.id }}+${{ github.event.sender.login }}@users.noreply.github.com"
+          git config user.name "${{ github.event.sender.login }}"
 
       - name: Publish Solution
         uses: microsoft/powerplatform-actions/publish-solution@0.5.1
