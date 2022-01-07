@@ -16,25 +16,40 @@ on:
       commitMessage:
         required: true
 
+env:
+  new_branch_name: dev-${{ github.event.inputs.branchToCreate }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  create-dev-branch:
+    runs-on : windows-latest
+    if: ${{ github.event.inputs.branchToCreate != '' }}
+    steps:
+    - uses: peterjgrainger/action-create-branch@v2.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: ${{ env.new_branch_name }}
+
+  
   export-solution-to-dev-branch:
     # The type of runner that the job will run on
     runs-on: windows-latest
-
     environment:
       name: development
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Configure Git existing branch
+      - name: Checkout branch ${{ env.branch_name }}
         if: ${{ github.event.inputs.branchToCreate == '' }}
-        run: git checkout ${{ github.event.inputs.branch }}
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
-      - name: Configure Git new branch
+      - name: Checkout branch ${{ env.new_branch_name }}
         if: ${{ github.event.inputs.branchToCreate != '' }}
-        run: git checkout -b dev-${{ github.event.inputs.branchToCreate }} ${{ github.event.inputs.branch }}
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.new_branch_name }}
 
       - name: Configure Git User
         run: |
