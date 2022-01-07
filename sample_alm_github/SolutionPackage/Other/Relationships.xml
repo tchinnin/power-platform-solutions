@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_tchinnin_word" />
+  <EntityRelationship Name="lk_tchinnin_word_createdby" />
+  <EntityRelationship Name="lk_tchinnin_word_modifiedby" />
+  <EntityRelationship Name="owner_tchinnin_word" />
+  <EntityRelationship Name="team_tchinnin_word" />
+  <EntityRelationship Name="user_tchinnin_word" />
+</EntityRelationships>

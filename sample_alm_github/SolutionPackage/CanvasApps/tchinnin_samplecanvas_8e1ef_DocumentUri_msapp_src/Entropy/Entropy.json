@@ -1,0 +1,79 @@
+{
+  "ComponentIndexes": {},
+  "ControlUniqueIds": {
+    "App": 1,
+    "ctnFullScreen": 4,
+    "ctnHeader": 5,
+    "galleryTemplate1": 10,
+    "galWords": 9,
+    "Home screen": 3,
+    "icoNavigateBackOffice": 8,
+    "icoRefresh": 7,
+    "lblAppTitle": 6,
+    "lblWord": 11
+  },
+  "FunctionParamsInvariantScripts": {},
+  "HeaderLastSavedDateTimeUTC": "01/07/2022 10:18:02",
+  "LocalDatabaseReferencesAsEmpty": false,
+  "LocalResourceFileNames": {},
+  "LocalResourceRootPaths": {},
+  "OrderComponentMetadata": {},
+  "OrderComponentTemplate": {},
+  "OrderDataSource": {
+    "CustomGallerySample": 15,
+    "Environment Variable Definitions": 17,
+    "Environment Variable Definitions\\default.cds_environmentvariabledefinition_views": 13,
+    "Environment Variable Definitions\\environmentvariabledefinition_isrequired": 6,
+    "Environment Variable Definitions\\environmentvariabledefinition_secretstore": 7,
+    "Environment Variable Definitions\\environmentvariabledefinition_statecode": 9,
+    "Environment Variable Definitions\\environmentvariabledefinition_statuscode": 10,
+    "Environment Variable Definitions\\environmentvariabledefinition_type": 8,
+    "Environment Variable Values": 16,
+    "Environment Variable Values\\componentstate": 3,
+    "Environment Variable Values\\default.cds_environmentvariablevalue_views": 12,
+    "Environment Variable Values\\environmentvariablevalue_statecode": 4,
+    "Environment Variable Values\\environmentvariablevalue_statuscode": 5,
+    "Environment Variable Values\\ismanaged": 2,
+    "Words": 14,
+    "Words\\default.cds_tchinnin_word_views": 11,
+    "Words\\tchinnin_word_statecode": 0,
+    "Words\\tchinnin_word_statuscode": 1
+  },
+  "OrderGroupControls": {},
+  "OrderTemplate": {},
+  "OrderXMLTemplate": {
+    "gallery": 3,
+    "groupContainer": 0,
+    "icon": 2,
+    "label": 1
+  },
+  "PublishOrderIndices": {
+    "App": 0,
+    "ctnFullScreen": 0,
+    "ctnHeader": 1,
+    "galleryTemplate1": 6,
+    "galWords": 5,
+    "Home screen": 0,
+    "icoNavigateBackOffice": 4,
+    "icoRefresh": 3,
+    "lblAppTitle": 2,
+    "lblWord": 7
+  },
+  "ResourcesJsonIndices": {
+    "Image-SampleImage": 0
+  },
+  "TemplateVersions": {},
+  "VolatileProperties": {
+    "AnalysisLoadTime": 0.27298070000000002,
+    "ControlCount": {
+      "gallery": 1,
+      "galleryTemplate": 1,
+      "groupContainer": 2,
+      "icon": 2,
+      "label": 2,
+      "screen": 1
+    },
+    "DeserializationLoadTime": 1.5191937,
+    "ErrorCount": 0
+  }
+}

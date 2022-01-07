@@ -1,0 +1,96 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "tchinnin_words",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "tchinnin_word",
+    "Name": "Words",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "tchinnin_label": "Label",
+      "tchinnin_word_AsyncOperations": "System Jobs",
+      "tchinnin_word_BulkDeleteFailures": "Bulk Delete Failures",
+      "tchinnin_word_DuplicateBaseRecord": "Duplicate Records (tchinnin_word_DuplicateBaseRecord)",
+      "tchinnin_word_DuplicateMatchingRecord": "Duplicate Records (tchinnin_word_DuplicateMatchingRecord)",
+      "tchinnin_word_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "tchinnin_word_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "tchinnin_word_ProcessSession": "Process Sessions",
+      "tchinnin_word_SyncErrors": "Sync Errors",
+      "tchinnin_wordid": "Word",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Words",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Words (Views)",
+    "Name": "_tchinnin_word_views",
+    "RelatedEntityName": "Words",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "102a9f53-33dd-4d6c-a3c1-79c9dd9a9d38": "Inactive Words",
+      "a38bbb23-cfd7-442b-a59b-5e3664a720bc": "Word Advanced Find View",
+      "c9596e23-2896-48cb-b4f5-bbb0bd8f1f00": "Active Words",
+      "c972421f-ffef-4afa-86d0-b92c39c0e6a4": "Word Associated View",
+      "fe9df94c-accd-4a23-ae18-2e7885706f47": "Word Lookup View"
+    }
+  },
+  {
+    "DisplayName": "Status (Words)",
+    "Name": "tchinnin_word_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Words"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Words",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Words)",
+    "Name": "tchinnin_word_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Words"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Words",
+    "Type": "OptionSetInfo"
+  }
+]

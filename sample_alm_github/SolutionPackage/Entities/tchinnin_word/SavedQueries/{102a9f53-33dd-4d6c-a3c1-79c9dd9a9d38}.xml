@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{102a9f53-33dd-4d6c-a3c1-79c9dd9a9d38}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="tchinnin_label" select="1" icon="1" preview="1">
+        <row name="result" id="tchinnin_wordid">
+          <cell name="tchinnin_label" width="300" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="tchinnin_word">
+          <attribute name="tchinnin_wordid" />
+          <attribute name="tchinnin_label" />
+          <attribute name="createdon" />
+          <order attribute="tchinnin_label" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Words" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

@@ -1,0 +1,10 @@
+<environmentvariabledefinition schemaname="tchinnin_sample_mda_url">
+  <displayname default="SampleMDA URL">
+    <label description="SampleMDA URL" languagecode="1033" />
+  </displayname>
+  <introducedversion>0.1.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

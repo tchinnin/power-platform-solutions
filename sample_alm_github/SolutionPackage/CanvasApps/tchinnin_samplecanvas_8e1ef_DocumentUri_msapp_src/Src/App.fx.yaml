@@ -1,0 +1,4 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: =Set(gloBackOfficeURL,LookUp('Environment Variable Values','Environment Variable Definition'.'Schema Name' = "tchinnin_sample_mda_url",Value))
+
