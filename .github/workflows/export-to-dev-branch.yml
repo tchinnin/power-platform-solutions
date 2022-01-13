@@ -16,152 +16,22 @@ on:
       commitMessage:
         required: true
 
-env:
-  new_branch_name: dev-${{ github.event.inputs.branchToCreate }}
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  create-dev-branch:
-    runs-on : windows-latest
-    if: ${{ github.event.inputs.branchToCreate != '' }}
-    steps:
-    - uses: peterjgrainger/action-create-branch@v2.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        branch: ${{ env.new_branch_name }}
-
+  export-solution:
+    uses: tchinnin/powerplatform-alm-workflows/.github/workflows/export-solution.yml@main
+    with:
+      solutionName: ${{ github.event.inputs.solutionName }}
+    secrets:
+      ENV_URL: ${{ secrets.ENV_URL }}
+      DATAVERSE_APPID: ${{ secrets.DATAVERSE_APPID }}
+      DATAVERSE_SECRET: ${{ secrets.DATAVERSE_SECRET }}
+      TENANT_ID: ${{ secrets.TENANT_ID }}
   
-  export-solution-to-dev-branch:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
-    environment:
-      name: development
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Checkout branch ${{ env.branch_name }}
-        if: ${{ github.event.inputs.branchToCreate == '' }}
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.branch }}
-
-      - name: Checkout branch ${{ env.new_branch_name }}
-        if: ${{ github.event.inputs.branchToCreate != '' }}
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ env.new_branch_name }}
-
-      - name: Configure Git User
-        run: |
-          # Configure email/name and checkout git branch
-          git config user.email "${{ github.event.sender.id }}+${{ github.event.sender.login }}@users.noreply.github.com"
-          git config user.name "${{ github.event.sender.login }}"
-
-      - name: Publish Solution
-        uses: microsoft/powerplatform-actions/publish-solution@0.5.1
-        with:
-          environment-url: ${{ secrets.ENV_URL }}
-          app-id: ${{ secrets.DATAVERSE_APPID }}
-          client-secret: ${{ secrets.DATAVERSE_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-
-      - name: Export Solution
-        uses: microsoft/powerplatform-actions/export-solution@0.5.1
-        with:
-          environment-url: ${{ secrets.ENV_URL }}
-          app-id: ${{ secrets.DATAVERSE_APPID }}
-          client-secret: ${{ secrets.DATAVERSE_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          solution-name: ${{ github.event.inputs.solutionName }}
-          solution-output-file: '${{ runner.temp }}\exported-zip-solutions\${{ github.event.inputs.solutionName }}.zip'
-          managed: false
-
-      - name: Unpack Solution
-        uses: microsoft/powerplatform-actions/unpack-solution@0.5.1
-        with:
-          solution-file: '${{ runner.temp }}\exported-zip-solutions\${{ github.event.inputs.solutionName }}.zip'
-          solution-folder: .\${{ github.event.inputs.solutionName }}\SolutionPackage
-          solution-type: Unmanaged
-          overwrite-files: true
-
-      - name: Update Solution XML Version
-        shell: pwsh
-        run: |
-          Get-ChildItem -Path ".\${{ github.event.inputs.solutionName }}\SolutionPackage\**\Solution.xml" | 
-          ForEach-Object {
-            (Get-Content $_.FullName) `
-              -replace '<Version>[\s\S]*?<\/Version>', '<Version>0.0.0.0</Version>' |
-            Out-File $_.FullName
-          }
-
-      - name: Install Power Apps CLI
-        shell: pwsh
-        id: install-pac
-        run: |
-          $nugetPackage = "Microsoft.PowerApps.CLI"
-          $outFolder = "${{ runner.temp }}\pac"
-          nuget install $nugetPackage -OutputDirectory $outFolder
-          $pacNugetFolder = Get-ChildItem $outFolder | Where-Object {$_.Name -match $nugetPackage + "."}
-          $pacPath = $pacNugetFolder.FullName + "\tools"
-          echo "::set-output name=pacPath::$pacPath"
-
-      - name: Unpack MSAPP
-        shell: pwsh
-        run: |
-           Get-ChildItem -Path ".\${{ github.event.inputs.solutionName }}" -Recurse -Filter *.msapp | 
-            ForEach-Object {
-                $unpackedPath = $_.FullName.Replace(".msapp", "_msapp_src")
-                $env:PATH = $env:PATH + ";" + "${{ steps.install-pac.outputs.pacPath }}"
-                pac canvas unpack --msapp $_.FullName --sources $unpackedPath
-                del $_.FullName
-            }
-            
-      - name: Clear Connection parameters JSON files
-        shell: pwsh
-        run: |
-          Get-ChildItem -Path ".\${{ github.event.inputs.solutionName }}" -Recurse -Filter *_connectionparameters.json | 
-            ForEach-Object {
-              Clear-Content $_.FullName
-            }
-
-      - name: Format JSON files
-        shell: pwsh
-        run: |
-          Invoke-WebRequest -Uri https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe -OutFile  jq.exe
-          Get-ChildItem -Path ".\${{ github.event.inputs.solutionName }}\SolutionPackage" -Recurse -Filter *.json | 
-              ForEach-Object {
-              #skip canvas app folder because canvas team already handles this for canvas unpack
-                if(-not $_.FullName.Contains('CanvasApps')) {
-                  Write-Host $_.FullName
-                  $formatted = .\jq.exe . $_.FullName --sort-keys
-                  $formatted | Out-File $_.FullName -Encoding UTF8
-                }
-              }
-          del jq.exe
-
-      - name: Delete Environment Variables values
-        shell: pwsh
-        run: Get-ChildItem -Path ".\${{ github.event.inputs.solutionName }}\SolutionPackage\environmentvariabledefinitions" -Recurse -Filter environmentvariablevalues.json | Remove-Item
-
-      - name: Add changes to Git
-        run: git add --all
-
-      - name: Commit changes to branch
-        shell: pwsh
-        run: |
-          $gitStatus = iex "git status --porcelain"
-            if ($gitStatus) {
-                git commit -m "${{ github.event.inputs.commitMessage }}"
-            }
-            else {
-                Write-Warning "There is nothing to commit. No changes have been made since the previous commit. If this is unexpected make sure your changes have been published before committing again."
-                exit 1;
-            }
-
-      - name: Push to Git existing branch
-        if: ${{ github.event.inputs.branchToCreate == '' }}
-        run: git push origin ${{ github.event.inputs.branch }}
-
-      - name: Push to Git new branch
-        if: ${{ github.event.inputs.branchToCreate != '' }}
-        run: git push origin dev-${{ github.event.inputs.branchToCreate }}
+  unpack-solution-to-branch:
+    needs: export-solution
+    uses: tchinnin/powerplatform-alm-workflows/.github/workflows/unpack-solution-to-branch.yml@main
+    with:
+      solutionName: ${{ github.event.inputs.solutionName }}
+      branch: ${{ github.event.inputs.branch }}
+      branchToCreate: ${{ github.event.inputs.branchToCreate }}
+      commitMessage: ${{ github.event.inputs.commitMessage }}
